@@ -20,6 +20,7 @@ jobs:
       run: npm install
 
     - name: Run linter
+      working-directory: /challenge
       run: npm run lint 
 
     - name: Run tests
