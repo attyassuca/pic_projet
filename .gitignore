@@ -1,0 +1,28 @@
+# Ignore node_modules directory
+node_modules/
+
+# Optional: Uncomment the following lines if you use npm to manage your packages
+# You may want to keep package-lock.json if you are sharing the project with others
+# Uncomment these lines if using npm
+# package-lock.json
+
+# Optional: Uncomment the following line if you are using Yarn to manage your packages
+# Uncomment this line if using Yarn
+# yarn.lock
+
+# Ignore environment-specific files
+.env
+
+# Ignore logs and other generated files
+logs/
+*.log
+
+# Ignore user-specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
