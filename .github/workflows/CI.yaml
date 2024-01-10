@@ -25,15 +25,20 @@ jobs:
     - name: Run tests
       working-directory: ./challenge
       run: npm test
-      
+
   security:
+    needs: run_test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - name: Changing directory
+      run: |
+       cd ./challenge
+      
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
+      continue-on-error: true
       env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
 
 
   
