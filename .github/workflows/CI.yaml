@@ -25,7 +25,6 @@ jobs:
     - name: Run tests
       working-directory: ./challenge
       run: npm test
-  securite-check:
-    runs-on: ubuntu-latest
-      
+
+
   
