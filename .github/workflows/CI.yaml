@@ -32,7 +32,7 @@ jobs:
     steps:
     - name: Changing directory
       run: |
-       cd challenge
+        cd .\challenge\
       
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
