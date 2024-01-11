@@ -46,8 +46,9 @@ jobs:
     - name: Read Snyk output from file
       id: read_output
       run: |
-          snyk_output=$(cat snyk_output.txt)
-          echo "::set-output name=snyk-output::$snyk_output"    
+        snyk_output=$(cat snyk_output.txt)
+        snyk_output_escaped=$(echo "$snyk_output" | awk '{gsub(/"/, "\\\""); print}')
+        echo "::set-output name=snyk-output::$snyk_output_escaped"
    
 
   
