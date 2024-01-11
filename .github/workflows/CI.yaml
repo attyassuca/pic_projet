@@ -62,10 +62,6 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-    - name: Check SonarCloud Quality Gate
-      uses: sonarsource/sonarcloud-github-action@master
-      with:
-        projectBaseDir: ./    
    
 
   
