@@ -32,12 +32,16 @@ jobs:
     steps:
     - uses: actions/checkout@master  
     - name: Run Snyk to check for vulnerabilities
+      id: snyk
       uses: snyk/actions/node@master
       continue-on-error: true
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
       with:
         args: --all-projects
+    - name: Save Snyk output to file
+      run: |
+        echo "${{ steps.snyk.outputs.snyk-output }}" > snyk_output.txt    
    
 
   
