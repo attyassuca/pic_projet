@@ -71,6 +71,7 @@ jobs:
         with:
           name: snyk-results
           path: ${{ github.workspace }}
+          workflow: ${{ github.event.workflow_run.id }}
       
       - name: Send notification
         uses: ravsamhq/notify-slack-action@v2
