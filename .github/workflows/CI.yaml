@@ -34,7 +34,7 @@ jobs:
     - name: Run Snyk to check for vulnerabilities
       id: snyk
       uses: snyk/actions/node@master
-      continue-on-error: true
+      #continue-on-error: true
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
       with:
@@ -42,13 +42,7 @@ jobs:
     - name: Save Snyk output to file
       run: |
         echo "${{ steps.snyk.outputs.snyk-output }}" > snyk_output.txt    
-    
-    #- name: Read Snyk output from file
-    #  id: read_output
-    #  run: |
-    #    snyk_output=$(cat snyk_output.txt)
-    #    snyk_output_escaped=$(echo "$snyk_output" | awk '{gsub(/"/, "\\\""); print}')
-    #    echo "::set-output name=snyk-output::$snyk_output_escaped"
+
   sonarcloud:
     needs: run_test
     name: SonarCloud
