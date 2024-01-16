@@ -44,7 +44,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: snyk-results
-        path: ${{ github.workspace }}/snyk-report.json   
+        path: ${{ github.workspace }}/snyk-report.json
+    - name: Set output for downstream jobs
+      id: set-output
+      run: echo "::set-output name=steps-output::snyk-results" 
 
   sonarcloud:
     needs: run_test
@@ -69,17 +72,13 @@ jobs:
           name: snyk-results
           path: ${{ github.workspace }}
       
-      - name: Read Snyk results
-        id: read-snyk-results
-        run: echo "::set-output name=snyk-results::$(cat ${{ github.workspace }}/snyk-report.json)"
-      
       - name: Send notification
         uses: ravsamhq/notify-slack-action@v2
         if: always()
         with:
           status: ${{ job.status }}
           notification_title: "{workflow} has {status_message}"
-          message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>. Snyk Results: ${{ steps.read-snyk-results.outputs.snyk-results }}"
+          message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>. Snyk Results: ${{ steps.set-output.outputs.steps-output  }}"
           footer: "Linked Repo <{repo_url}|{repo}>"
           notify_when: "failure"
           mention_users: "U0160UUNH8S,U0080UUAA9N"
