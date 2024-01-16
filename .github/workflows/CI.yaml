@@ -34,14 +34,17 @@ jobs:
     - name: Run Snyk to check for vulnerabilities
       id: snyk
       uses: snyk/actions/node@master
-      #continue-on-error: true
+      continue-on-error: true
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
       with:
         args: --all-projects
-    - name: Save Snyk output to file
-      run: |
-        echo "${{ steps.snyk.outputs.snyk-output }}" > snyk_output.txt    
+    
+    - name: Upload Snyk results as an artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: snyk-results
+        path: ${{ github.workspace }}/snyk-report.json   
 
   sonarcloud:
     needs: run_test
@@ -55,6 +58,34 @@ jobs:
       uses: SonarSource/sonarcloud-github-action@master
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  
+  send_notification:
+    needs: security
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Snyk results artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: snyk-results
+          path: ${{ github.workspace }}
+      
+      - name: Read Snyk results
+        id: read-snyk-results
+        run: echo "::set-output name=snyk-results::$(cat ${{ github.workspace }}/snyk-report.json)"
+      
+      - name: Send notification
+        uses: ravsamhq/notify-slack-action@v2
+        if: always()
+        with:
+          status: ${{ job.status }}
+          notification_title: "{workflow} has {status_message}"
+          message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>. Snyk Results: ${{ steps.read-snyk-results.outputs.snyk-results }}"
+          footer: "Linked Repo <{repo_url}|{repo}>"
+          notify_when: "failure"
+          mention_users: "U0160UUNH8S,U0080UUAA9N"
+          mention_users_when: "failure,warnings"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}      
 
    
 
