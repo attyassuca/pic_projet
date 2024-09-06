@@ -10,11 +10,11 @@
   "author": "makelaris,TRX",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^3.14.0",
-    "fastify-formbody": "^5.0.0",
+    "fastify": "^4.24.1",
+    "fastify-formbody": "^5.1.0",
     "fastify-static": "^4.0.1",
     "puppeteer": "^8.0.0",
-    "sqlite-async": "^1.1.1"
+    "sqlite-async": "^1.1.4"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
