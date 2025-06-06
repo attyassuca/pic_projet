@@ -10,10 +10,10 @@
   "author": "makelaris,TRX",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^3.14.0",
+    "fastify": "^4.26.0",
     "fastify-formbody": "^5.0.0",
     "fastify-static": "^4.0.1",
-    "puppeteer": "^8.0.0",
+    "puppeteer": "^22.8.2",
     "sqlite-async": "^1.1.1"
   },
   "devDependencies": {
