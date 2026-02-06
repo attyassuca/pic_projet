@@ -1,4 +1,4 @@
-FROM node
+FROM node:25.6.0-bookworm
 
 # Install packages
 RUN apt-get update \
